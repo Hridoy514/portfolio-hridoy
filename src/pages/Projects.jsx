@@ -38,7 +38,7 @@ const projects = [
       { name: "Express", icon: <SiExpress />, color: "#000000" },
     ],
     image: "https://i.ibb.co.com/Rpqc1QLr/project-3.jpg",
-    githubLink: "#",
+    githubLink: "https://github.com/Hridoy514/garden-hub",
     liveLink: "https://gardeninghub-society.surge.sh",
   },
   {
@@ -52,7 +52,7 @@ const projects = [
       { name: "Tailwind", icon: <SiTailwindcss />, color: "#38B2AC" },
     ],
     image: "https://i.ibb.co.com/4RGY245F/project-2.jpg",
-    githubLink: "#",
+    githubLink: "https://github.com/Hridoy514/job_track",
     liveLink: "https://jobtrack-awesome-foryou.surge.sh/",
   },
 ];
