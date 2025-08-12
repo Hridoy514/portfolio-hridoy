@@ -60,17 +60,17 @@ const Contact = () => {
   const contactMethods = [
     {
       icon: <FaPhone className="text-xl sm:text-2xl" />,
-      text: "+1 (123) 456-7890",
+      text: "+880 1746796828",
       color: "from-purple-500 to-indigo-600",
     },
     {
       icon: <SiGmail className="text-xl sm:text-2xl" />,
-      text: "your.email@example.com",
+      text: "mdhridoybd514@gmail.com",
       color: "from-red-500 to-pink-600",
     },
     {
       icon: <FaMapMarkerAlt className="text-xl sm:text-2xl" />,
-      text: "San Francisco, CA",
+      text: "Pabna Rajshahi Bangladesh",
       color: "from-green-500 to-teal-600",
     },
   ];
@@ -78,17 +78,17 @@ const Contact = () => {
   const socialLinks = [
     {
       icon: <FaLinkedin className="text-xl" />,
-      url: "#",
+      url: "https://www.linkedin.com/in/hridoy514/",
       color: "hover:text-blue-500",
     },
     {
       icon: <FaGithub className="text-xl" />,
-      url: "#",
+      url: "https://github.com/Hridoy514",
       color: "hover:text-gray-300",
     },
     {
       icon: <FaTwitter className="text-xl" />,
-      url: "#",
+      url: "https://twitter.com/MdHridoy370374?s=09",
       color: "hover:text-sky-400",
     },
   ];
