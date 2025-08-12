@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { FaCode } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const [isHoveringLogo, setIsHoveringLogo] = useState(false);
 
   const navLinks = [
     { label: "Home", href: "#home" },
@@ -14,13 +17,25 @@ const Navbar = () => {
     { label: "Contact", href: "#contact" },
   ];
 
+  const socialLinks = [
+    {
+      icon: <FiGithub />,
+      url: "https://github.com/Hridoy514",
+      label: "GitHub",
+    },
+    {
+      icon: <FiLinkedin />,
+      url: "https://www.linkedin.com/in/hridoy514/",
+      label: "LinkedIn",
+    },
+    { icon: <FiMail />, url: "mailto:hridoybd514@gmail.com", label: "Email" },
+  ];
+
   useEffect(() => {
     const handleScroll = () => {
-      // Check if scrolled for navbar background
       setScrolled(window.scrollY > 10);
 
-      // Existing active section logic
-      const scrollPosition = window.scrollY;
+      const scrollPosition = window.scrollY + 100;
       const offsets = navLinks.map((link) => {
         const section = document.querySelector(link.href);
         return section
@@ -39,6 +54,7 @@ const Navbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initialize
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -55,7 +71,7 @@ const Navbar = () => {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-gradient-to-r from-purple-900 to-blue-900 shadow-xl"
+          ? "bg-[#0a0f22]/95 backdrop-blur-md shadow-lg border-b border-gray-800/50"
           : "bg-transparent"
       }`}
     >
@@ -64,46 +80,88 @@ const Navbar = () => {
           {/* Logo */}
           <motion.a
             href="#home"
-            className="text-2xl font-extrabold bg-clip-text bg-[rgb(255,90,48)]"
+            className="flex items-center gap-2 text-xl font-bold"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
+            onHoverStart={() => setIsHoveringLogo(true)}
+            onHoverEnd={() => setIsHoveringLogo(false)}
+            onClick={(e) => handleLinkClick(e, "#home")}
           >
-            Hridoy.dev
+            <motion.div
+              className="relative"
+              animate={{
+                rotate: isHoveringLogo ? 360 : 0,
+                transition: { duration: 0.6 },
+              }}
+            >
+              <FaCode className="text-cyan-400 text-2xl" />
+            </motion.div>
+            <motion.span
+              className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500"
+              whileHover={{ scale: 1.05 }}
+            >
+              Hridoy.dev
+            </motion.span>
           </motion.a>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navLinks.map((link) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
-                  activeSection === link.href
-                    ? "text-white bg-gradient-to-r from-pink-600 to-orange-500 shadow-lg"
-                    : "text-gray-300 hover:text-white hover:bg-gray-800/50"
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {link.label}
-                {activeSection === link.href && (
-                  <motion.span
-                    layoutId="navHighlight"
-                    className="absolute inset-0 rounded-full border border-white/20"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-              </motion.a>
-            ))}
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex items-center space-x-1">
+              {navLinks.map((link) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                    activeSection === link.href
+                      ? "text-white"
+                      : "text-gray-400 hover:text-white"
+                  }`}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {link.label}
+                  {activeSection === link.href && (
+                    <motion.div
+                      layoutId="navHighlight"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500"
+                      transition={{
+                        type: "spring",
+                        bounce: 0.2,
+                        duration: 0.6,
+                      }}
+                    />
+                  )}
+                </motion.a>
+              ))}
+            </div>
+
+            {/* Social Links */}
+            <div className="flex items-center gap-3 ml-4">
+              {socialLinks.map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-cyan-400 text-lg transition-colors"
+                  whileHover={{ y: -3, scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  aria-label={social.label}
+                >
+                  {social.icon}
+                </motion.a>
+              ))}
+            </div>
           </div>
 
           {/* Mobile menu button */}
           <motion.button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 rounded-md text-gray-300 hover:text-white hover:bg-gray-800/50 focus:outline-none"
+            className="md:hidden p-2 rounded-md text-gray-400 hover:text-cyan-400 focus:outline-none"
             whileTap={{ scale: 0.9 }}
+            aria-label="Toggle menu"
           >
             <svg
               className="h-6 w-6"
@@ -133,30 +191,57 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <motion.div
-        className={`md:hidden overflow-hidden ${menuOpen ? "block" : "hidden"}`}
-        initial={{ height: 0 }}
-        animate={{ height: menuOpen ? "auto" : 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="px-2 pt-2 pb-3 space-y-1 bg-gradient-to-b from-purple-900/95 to-blue-900/95 backdrop-blur-sm">
-          {navLinks.map((link) => (
-            <motion.a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href)}
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
-                activeSection === link.href
-                  ? "bg-gradient-to-r from-pink-600 to-orange-500 text-white"
-                  : "text-gray-300 hover:text-white hover:bg-gray-800/50"
-              }`}
-              whileHover={{ x: 5 }}
-            >
-              {link.label}
-            </motion.a>
-          ))}
-        </div>
-      </motion.div>
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="md:hidden overflow-hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="px-4 pt-2 pb-4 space-y-2 bg-[#0a0f22]/95 backdrop-blur-md border-t border-gray-800/50">
+              {navLinks.map((link) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium ${
+                    activeSection === link.href
+                      ? "bg-[#1a1f2d] text-cyan-400"
+                      : "text-gray-400 hover:text-white hover:bg-[#1a1f2d]/50"
+                  }`}
+                  initial={{ x: 20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+
+              <div className="flex justify-center gap-6 pt-4">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-cyan-400 text-xl"
+                    whileHover={{ y: -3, scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                    aria-label={social.label}
+                  >
+                    {social.icon}
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
