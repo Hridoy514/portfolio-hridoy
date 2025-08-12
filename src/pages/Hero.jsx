@@ -120,8 +120,8 @@ const Hero = () => {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-8">
           <motion.a
-            href="/resume.pdf"
-            download
+            href="https://drive.google.com/uc?export=download&id=1a87zRz4I_RohQECct6NpX7CN1cwKDMqr"
+            download="Hridoy_Rahman_Resume.pdf"
             className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold"
             variants={buttonVariants}
             whileHover="hover"
