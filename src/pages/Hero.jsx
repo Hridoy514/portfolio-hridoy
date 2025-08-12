@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { Typewriter } from "react-simple-typewriter";
 import heroImage from "../assets/profile-pic.jpg";
 import {
   FiGithub,
@@ -99,8 +100,16 @@ const Hero = () => {
           variants={titleVariants}
         >
           Hi, I'm{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-            Hridoy
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-semibold">
+            <Typewriter
+              words={["Hridoy"]}
+              loop={false}
+              cursor
+              cursorStyle="|"
+              typeSpeed={120}
+              deleteSpeed={50}
+              delaySpeed={1000}
+            />
           </span>
         </motion.h1>
 

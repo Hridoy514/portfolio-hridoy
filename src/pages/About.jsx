@@ -205,7 +205,7 @@ const About = () => {
                 </span>
               </h3>
               <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                I'm a passionate Full Stack Developer with 5+ years of
+                I'm a passionate Full Stack Developer with 1 year of
                 experience creating digital experiences that matter.
                 Specializing in modern JavaScript frameworks and cloud
                 technologies.
