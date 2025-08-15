@@ -21,6 +21,7 @@ import {
 const Hero = () => {
   const [isHovering, setIsHovering] = useState(false);
   const constraintsRef = useRef(null);
+  const containerRef = useRef(null);
 
   const skills = [
     { name: "React", icon: <FaReact />, color: "#61DAFB" },
@@ -45,10 +46,7 @@ const Hero = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
+      transition: { duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] },
     },
   };
 
@@ -56,13 +54,9 @@ const Hero = () => {
     hover: {
       scale: 1.05,
       boxShadow: "0 10px 20px rgba(255, 99, 71, 0.3)",
-      transition: {
-        duration: 0.3,
-      },
+      transition: { duration: 0.3 },
     },
-    tap: {
-      scale: 0.98,
-    },
+    tap: { scale: 0.98 },
   };
 
   const floatingSkillVariants = {
@@ -70,15 +64,9 @@ const Hero = () => {
     animate: (index) => ({
       opacity: 1,
       scale: 1,
-      transition: {
-        delay: index * 0.1,
-        duration: 0.5,
-      },
+      transition: { delay: index * 0.1, duration: 0.5 },
     }),
-    hover: {
-      scale: 1.1,
-      transition: { duration: 0.2 },
-    },
+    hover: { scale: 1.1, transition: { duration: 0.2 } },
   };
 
   return (
@@ -114,7 +102,7 @@ const Hero = () => {
         </motion.h1>
 
         <motion.p
-          className="text-lg md:text-xl text-gray-300 mb-8 max-w-lg"
+          className="text-lg md:text-xl text-gray-300 mb-8 max-w-lg md:max-w-xl mx-auto md:mx-0"
           initial="hidden"
           animate="visible"
           variants={titleVariants}
@@ -200,7 +188,10 @@ const Hero = () => {
         onHoverStart={() => setIsHovering(true)}
         onHoverEnd={() => setIsHovering(false)}
       >
-        <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80">
+        <div
+          ref={containerRef}
+          className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80"
+        >
           {/* Glowing profile image */}
           <motion.div
             className="w-full h-full rounded-full overflow-hidden border-2 border-cyan-400/50 relative"
@@ -224,43 +215,44 @@ const Hero = () => {
 
           {/* Floating skills */}
           <div className="absolute inset-0">
-            {skills.map((skill, index) => (
-              <motion.div
-                key={skill.name}
-                className="absolute flex items-center gap-2 bg-[#0f1623] border border-gray-700 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap shadow-lg"
-                style={{
-                  color: skill.color,
-                  borderColor: `${skill.color}50`,
-                  backgroundColor: `${skill.color}10`,
-                }}
-                custom={index}
-                variants={floatingSkillVariants}
-                initial="initial"
-                animate="animate"
-                whileHover="hover"
-                drag
-                dragConstraints={constraintsRef}
-                dragElastic={0.1}
-                animate={{
-                  x:
-                    Math.cos((index * 2 * Math.PI) / skills.length) *
-                    (isHovering ? 140 : 120),
-                  y:
-                    Math.sin((index * 2 * Math.PI) / skills.length) *
-                    (isHovering ? 140 : 120),
-                  rotate: isHovering ? (index * 360) / skills.length : 0,
-                  scale: isHovering ? 1.1 : 1,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 10,
-                }}
-              >
-                <span className="text-sm">{skill.icon}</span>
-                {skill.name}
-              </motion.div>
-            ))}
+            {skills.map((skill, index) => {
+              const radius = isHovering ? 0.7 : 0.55; // relative to container
+              return (
+                <motion.div
+                  key={skill.name}
+                  className="absolute flex items-center gap-2 bg-[#0f1623] border border-gray-700 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap shadow-lg"
+                  style={{
+                    color: skill.color,
+                    borderColor: `${skill.color}50`,
+                    backgroundColor: `${skill.color}10`,
+                  }}
+                  custom={index}
+                  variants={floatingSkillVariants}
+                  initial="initial"
+                  animate="animate"
+                  whileHover="hover"
+                  drag
+                  dragConstraints={containerRef}
+                  dragElastic={0.1}
+                  style={{
+                    left: "40%",
+                    top: "48%",
+                    x:
+                      Math.cos((index * 2 * Math.PI) / skills.length) *
+                      radius *
+                      (containerRef.current?.offsetWidth || 120),
+                    y:
+                      Math.sin((index * 2 * Math.PI) / skills.length) *
+                      radius *
+                      (containerRef.current?.offsetHeight || 120),
+                  }}
+                  transition={{ type: "spring", stiffness: 100, damping: 10 }}
+                >
+                  <span className="text-sm">{skill.icon}</span>
+                  {skill.name}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </motion.div>
