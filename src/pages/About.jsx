@@ -164,7 +164,7 @@ const About = () => {
                     transition={{ delay: 0.1 }}
                   >
                     <h3 className="text-white text-lg sm:text-xl font-bold mb-1">
-                      John Doe
+                      Md Hridoy Mulla
                     </h3>
                     <p className="text-gray-300 text-sm sm:text-base">
                       Full Stack Developer

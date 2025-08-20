@@ -43,18 +43,15 @@ const Navbar = () => {
           : { id: link.href, offset: 0 };
       });
 
-      const current = offsets.reduce((closest, section) => {
-        if (scrollPosition >= section.offset - 150) {
-          return section.id;
-        }
-        return closest;
-      }, "");
+      const current = offsets
+        .filter((section) => scrollPosition >= section.offset - 150)
+        .pop();
 
-      setActiveSection(current);
+      setActiveSection(current ? current.id : "");
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initialize
+    handleScroll(); // initialize
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -194,10 +191,10 @@ const Navbar = () => {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="md:hidden overflow-hidden"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            className="md:hidden origin-top"
+            initial={{ scaleY: 0, opacity: 0 }}
+            animate={{ scaleY: 1, opacity: 1 }}
+            exit={{ scaleY: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             <div className="px-4 pt-2 pb-4 space-y-2 bg-[#0a0f22]/95 backdrop-blur-md border-t border-gray-800/50">
