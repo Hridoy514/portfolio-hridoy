@@ -53,7 +53,7 @@ const Hero = () => {
   const buttonVariants = {
     hover: {
       scale: 1.05,
-      boxShadow: "0 10px 20px rgba(255, 99, 71, 0.3)",
+      boxShadow: "0 10px 20px rgba(34, 211, 238, 0.4)",
       transition: { duration: 0.3 },
     },
     tap: { scale: 0.98 },
@@ -117,8 +117,8 @@ const Hero = () => {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mb-8">
           <motion.a
-            href="https://drive.google.com/file/d/1KRT6tALzkUrspHKUhP7plDHcBmsYIIxv/view?usp=sharing"
-            download="Resume_Md_Hridoy.pdf"
+            href="https://drive.google.com/uc?export=download&id=1KRT6tALzkUrspHKUhP7plDHcBmsYIIxv"
+            download="Resume_Md_Hridoy"
             className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold"
             variants={buttonVariants}
             whileHover="hover"
@@ -128,7 +128,7 @@ const Hero = () => {
           </motion.a>
           <motion.a
             href="#projects"
-            className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3 rounded-lg border-2 border-cyan-400 text-white font-semibold hover:bg-cyan-500/10 transition-colors"
+            className="flex items-center justify-center gap-2 px-6 sm:px-8 py-3 rounded-lg border-2 border-cyan-400 text-white font-semibold"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
